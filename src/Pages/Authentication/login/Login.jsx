@@ -126,7 +126,7 @@ export default function Login() {
           htmlFor="Email"
         >
           <AlternateEmailIcon className="text-blue-600" />
-          <span>Email Address</span>
+          <span className="text-slate-200">Email Address</span>
         </InputLabel>
         <Input
           id="Email"
@@ -154,7 +154,7 @@ export default function Login() {
           htmlFor="password"
         >
           <VpnKeyOffIcon className="text-blue-600" />
-          <span>Password</span>
+          <span className="text-slate-200">Password</span>
         </InputLabel>
         <Input
           id="password"
@@ -203,7 +203,7 @@ export default function Login() {
         {/* Right Form Section */}
         <div className="w-full lg:w-1/2 p-5">
           <div className="login-form lg:p-5">
-            <h2 className="w-full mb-3 p-4 font-bold text-2xl text-center">
+            <h2 className="w-full mb-3 p-4 font-bold text-2xl text-center text-slate-200">
               Welcome Back...
             </h2>
             <p className="text-center text-slate-400 mb-6">
@@ -216,11 +216,12 @@ export default function Login() {
 
               {/* Remember Me + Forget Password */}
               <div className="forget-pass flex justify-between items-center mt-5 mb-5">
-                <label className="flex items-center text-sm lg:text-lg">
+                <label className="flex items-center gap-x-2 text-sm lg:text-lg text-slate-200">
                   <Checkbox
                     checked={checked}
                     onChange={handleChange}
                     inputProps={{ "aria-label": "controlled" }}
+                    className=""
                   />
                   Remember Me
                 </label>
@@ -245,7 +246,10 @@ export default function Login() {
                     "Login"
                   )}
                 </button>
-                <span className="block text-center relative"> OR </span>
+                <span className="block text-center relative text-slate-200">
+                  {" "}
+                  OR{" "}
+                </span>
                 <Link to="/signup">
                   <button
                     type="button"
