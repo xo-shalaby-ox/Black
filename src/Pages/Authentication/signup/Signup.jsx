@@ -1,4 +1,11 @@
+import { BackgroundBeams } from "@/Components/ui/background-beams";
+import { userContext } from "@/Context/userContext/UserContext";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import AlternateEmailRoundedIcon from "@mui/icons-material/AlternateEmailRounded";
+import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
+import KeyboardDoubleArrowRightRoundedIcon from "@mui/icons-material/KeyboardDoubleArrowRightRounded";
+import PhoneMissedRoundedIcon from "@mui/icons-material/PhoneMissedRounded";
+import VpnKeyOffIcon from "@mui/icons-material/VpnKeyOff";
 import {
   FormControl,
   FormHelperText,
@@ -10,59 +17,55 @@ import {
 import axios from "axios";
 import { useFormik } from "formik";
 import { useContext, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import * as yup from "yup";
 import loginPic from "../../../assets/login.gif";
-import { userContext } from "@/Context/userContext/UserContext";
-import { BackgroundBeams } from "@/Components/ui/background-beams";
-import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
-import AlternateEmailRoundedIcon from "@mui/icons-material/AlternateEmailRounded";
-import VpnKeyOffIcon from "@mui/icons-material/VpnKeyOff";
 
 // ✅ Reusable password field
-function PasswordField({
-  label,
-  name,
-  formik,
-  showPassword,
-  toggleShowPassword,
-}) {
-  return (
-    <FormControl sx={{ width: "100%" }} variant="standard">
-      <InputLabel
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          columnGap: 1,
-          overflow: "visible",
-        }}
-        htmlFor={name}
-      >
-        <VpnKeyOffIcon className="text-blue-600" />
-        <span>{label}</span>
-      </InputLabel>
-      <Input
-        id={name}
-        type={showPassword ? "text" : "password"}
-        name={name}
-        value={formik.values[name]}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched[name] && Boolean(formik.errors[name])}
-        endAdornment={
-          <InputAdornment position="end">
-            <IconButton onClick={toggleShowPassword} edge="end">
-              {showPassword ? <VisibilityOff /> : <Visibility />}
-            </IconButton>
-          </InputAdornment>
-        }
-      />
-      <FormHelperText error>
-        {formik.touched[name] && formik.errors[name]}
-      </FormHelperText>
-    </FormControl>
-  );
-}
+// function PasswordField({
+//   label,
+//   name,
+//   formik,
+//   showPassword,
+//   toggleShowPassword,
+// }) {
+//   return (
+//     <FormControl sx={{ width: "100%" }} variant="standard">
+//       <InputLabel
+//         sx={{
+//           display: "flex",
+//           alignItems: "center",
+//           columnGap: 1,
+//           overflow: "visible",
+//         }}
+//         htmlFor={name}
+//       >
+//         <VpnKeyOffIcon className="text-blue-600" />
+//         <span>{label}</span>
+//       </InputLabel>
+//       <Input
+//         id={name}
+//         type={showPassword ? "text" : "password"}
+//         name={name}
+//         value={formik.values[name]}
+//         onChange={formik.handleChange}
+//         onBlur={formik.handleBlur}
+//         error={formik.touched[name] && Boolean(formik.errors[name])}
+//         endAdornment={
+//           <InputAdornment position="end">
+//             <IconButton onClick={toggleShowPassword} edge="end">
+//               {showPassword ? <VisibilityOff /> : <Visibility />}
+//             </IconButton>
+//           </InputAdornment>
+//         }
+//       />
+//       <FormHelperText error>
+//         {formik.touched[name] && formik.errors[name]}
+//       </FormHelperText>
+//     </FormControl>
+//   );
+// }
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
@@ -70,7 +73,15 @@ export default function Signup() {
   const { setUserLogin } = useContext(userContext);
   const navigate = useNavigate();
 
-  const toggleShowPassword = () => setShowPassword((prev) => !prev);
+  // const toggleShowPassword = () => setShowPassword((prev) => !prev);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const handleMouseUpPassword = (event) => {
+    event.preventDefault();
+  };
 
   // ✅ Validation schema memoized
   const validationSchema = useMemo(
@@ -157,110 +168,175 @@ export default function Signup() {
 
             <form className="w-full p-4" onSubmit={formik.handleSubmit}>
               {/* Name */}
-              <div className="relative z-0 w-full mb-5 group">
-                <input
+              <FormControl fullWidth variant="standard">
+                <InputLabel
+                  sx={{ display: "flex", alignItems: "center", columnGap: 1 }}
+                  htmlFor="input-name"
+                >
+                  <BadgeRoundedIcon className="text-yellow-600" />
+                  <span className="text-slate-200">Your name</span>
+                </InputLabel>
+                <Input
+                  id="input-name"
                   type="text"
                   name="name"
-                  id="input-name"
-                  className="block py-2.5 px-0 w-full text-sm text-slate-100 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                  placeholder=" "
-                  {...formik.getFieldProps("name")}
+                  value={formik.values.name}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.name && Boolean(formik.errors.name)}
                 />
-                <label
-                  htmlFor="input-name"
-                  className="flex items-center gap-x-2 absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  <BadgeRoundedIcon className="text-blue-600" />
-                  <span>Your name</span>
-                </label>
-                {formik.touched.name && formik.errors.name && (
-                  <div className="text-red-600 text-sm mt-2 font-medium">
-                    {formik.errors.name}
-                  </div>
-                )}
-              </div>
+                <FormHelperText error>
+                  {formik.touched.name && formik.errors.name}
+                </FormHelperText>
+              </FormControl>
 
               {/* Email */}
-              <div className="relative z-0 w-full mb-5 group">
-                <input
+              <FormControl fullWidth variant="standard">
+                <InputLabel
+                  sx={{ display: "flex", alignItems: "center", columnGap: 1 }}
+                  htmlFor="input-email"
+                >
+                  <AlternateEmailRoundedIcon className="text-yellow-600" />
+                  <span className="text-slate-200">Email address</span>
+                </InputLabel>
+                <Input
+                  id="input-email"
                   type="email"
                   name="email"
-                  id="input-email"
-                  className="block py-2.5 px-0 w-full text-sm text-slate-100 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                  placeholder=" "
-                  {...formik.getFieldProps("email")}
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.email && Boolean(formik.errors.email)}
                 />
-                <label
-                  htmlFor="input-email"
-                  className="flex items-center gap-x-2 absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  <AlternateEmailRoundedIcon className="text-blue-600" />
-                  <span>Email address</span>
-                </label>
-                {formik.touched.email && formik.errors.email && (
-                  <div className="text-red-600 text-sm mt-2 font-medium">
-                    {formik.errors.email}
-                  </div>
-                )}
-              </div>
+                <FormHelperText error>
+                  {formik.touched.email && formik.errors.email}
+                </FormHelperText>
+              </FormControl>
 
               {/* Password */}
-              <div className="relative z-0 w-full mb-5 group">
-                <PasswordField
-                  label="New Password"
+              <FormControl fullWidth variant="standard">
+                <InputLabel
+                  htmlFor="password"
+                  sx={{ display: "flex", alignItems: "center", columnGap: 1 }}
+                >
+                  <VpnKeyOffIcon className="text-yellow-600" />
+                  <span className="text-slate-200">Password</span>
+                </InputLabel>
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
                   name="password"
-                  formik={formik}
-                  showPassword={showPassword}
-                  toggleShowPassword={toggleShowPassword}
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={
+                    formik.touched.password && Boolean(formik.errors.password)
+                  }
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label={
+                          showPassword
+                            ? "hide the password"
+                            : "display the password"
+                        }
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        onMouseUp={handleMouseUpPassword}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
                 />
-              </div>
-
+                <FormHelperText error>
+                  {formik.touched.password && formik.errors.password}
+                </FormHelperText>
+              </FormControl>
               {/* Confirm Password */}
-              <div className="relative z-0 w-full mb-5 group">
-                <PasswordField
-                  label="Confirm Password"
-                  name="rePassword"
-                  formik={formik}
-                  showPassword={showPassword}
-                  toggleShowPassword={toggleShowPassword}
-                />
-              </div>
 
+              <FormControl fullWidth variant="standard">
+                <InputLabel
+                  htmlFor="rePassword"
+                  sx={{ display: "flex", alignItems: "center", columnGap: 1 }}
+                >
+                  <VpnKeyOffIcon className="text-yellow-600" />
+                  <span className="text-slate-200">RePassword</span>
+                </InputLabel>
+                <Input
+                  id="rePassword"
+                  type={showPassword ? "text" : "password"}
+                  name="rePassword"
+                  value={formik.values.rePassword}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={
+                    formik.touched.rePassword &&
+                    Boolean(formik.errors.rePassword)
+                  }
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label={
+                          showPassword
+                            ? "hide the password"
+                            : "display the password"
+                        }
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        onMouseUp={handleMouseUpPassword}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+                <FormHelperText error>
+                  {formik.touched.rePassword && formik.errors.rePassword}
+                </FormHelperText>
+              </FormControl>
               {/* Phone */}
-              <div className="relative z-0 w-full mb-5 group">
-                <input
+              <FormControl fullWidth variant="standard">
+                <InputLabel
+                  sx={{ display: "flex", alignItems: "center", columnGap: 1 }}
+                  htmlFor="input-phone"
+                >
+                  <PhoneMissedRoundedIcon className="text-yellow-600" />
+                  <span className="text-slate-200">Phone</span>
+                </InputLabel>
+                <Input
+                  id="input-phone"
                   type="tel"
                   name="phone"
-                  id="input-phone"
-                  className="block py-2.5 px-0 w-full text-sm text-slate-100 bg-transparent border-0 border-b-2 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                  placeholder=" "
-                  {...formik.getFieldProps("phone")}
+                  value={formik.values.phone}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.phone && Boolean(formik.errors.phone)}
                 />
-                <label
-                  htmlFor="input-phone"
-                  className="flex items-center gap-x-2 absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  <i className="fa-solid fa-phone fa-bounce text-blue-600"></i>
-                  <span>Phone</span>
-                </label>
-                {formik.touched.phone && formik.errors.phone && (
-                  <div className="text-red-600 text-sm mt-2 font-medium">
-                    {formik.errors.phone}
-                  </div>
-                )}
-              </div>
+                <FormHelperText error>
+                  {formik.touched.phone && formik.errors.phone}
+                </FormHelperText>
+              </FormControl>
 
               {/* Submit */}
-              <button
-                type="submit"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 duration-300"
-              >
-                {isLoading ? (
-                  <i className="fa-solid fa-spinner fa-spin"></i>
-                ) : (
-                  "Register"
-                )}
-              </button>
+              <div className="btns flex justify-center items-center flex-col gap-y-5">
+                <button
+                  type="submit"
+                  className="cursor-pointer text-white mt-5 bg-yellow-600 hover:bg-yellow-700 focus:ring-4 focus:outline-none focus:ring-yellow-700 font-medium rounded-lg text-sm w-full px-5 py-2.5 duration-300"
+                >
+                  {isLoading ? (
+                    <i className="fa-solid fa-spinner fa-spin"></i>
+                  ) : (
+                    "Register"
+                  )}
+                </button>
+                <div className="btn-log flex justify-center items-center gap-x-1 p-3 rounded-xl self-start bg-slate-200 text-black hover:bg-yellow-700 hover:text-slate-200 duration-300 cursor-pointer">
+                  <Link className="font-bold uppercase" to="/login">
+                    login
+                  </Link>
+                  <KeyboardDoubleArrowRightRoundedIcon className="arrow-icon" />
+                </div>
+              </div>
             </form>
           </div>
         </div>

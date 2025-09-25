@@ -1,8 +1,9 @@
+import { BackgroundBeams } from "@/Components/ui/background-beams";
+import { userContext } from "@/Context/userContext/UserContext";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import VpnKeyOffIcon from "@mui/icons-material/VpnKeyOff";
 import {
-  Checkbox,
   FormControl,
   FormHelperText,
   IconButton,
@@ -17,8 +18,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import * as yup from "yup";
 import loginPic from "../../../assets/login.gif";
-import { userContext } from "@/Context/userContext/UserContext";
-import { BackgroundBeams } from "@/Components/ui/background-beams";
 
 // ✅ Move schema outside the component to avoid re-creating it each render
 const validationSchema = yup.object().shape({
@@ -42,11 +41,6 @@ export default function Login() {
   const [checked, setChecked] = useState(true);
   const { setUserLogin, setUserName } = useContext(userContext);
   const navigate = useNavigate();
-
-  // checkbox handler
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-  };
 
   // ✅ Memoized toggle function to avoid unnecessary re-renders
   const togglePasswordVisibility = useCallback(() => {
@@ -96,36 +90,16 @@ export default function Login() {
   // ✅ Extracted email field for clarity
   const EmailField = useMemo(
     () => (
-      // <div className="relative z-0 w-full mb-5 group">
-      //   <input
-      //     type="email"
-      //     name="email"
-      //     id="input-email"
-      //     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-      //     placeholder=" "
-      //     onChange={formik.handleChange}
-      //     onBlur={formik.handleBlur}
-      //     value={formik.values.email}
-      //   />
-      //   <label
-      //     htmlFor="input-email"
-      //     className="flex items-center gap-x-2 peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600"
-      //   >
-      //     <i className="fa-solid fa-envelope fa-bounce text-blue-600"></i>
-      //     <span>Email address</span>
-      //   </label>
-      //   {formik.errors.email && formik.touched.email && (
-      //     <p className="text-red-600 text-sm mt-2 font-medium">
-      //       {formik.errors.email}
-      //     </p>
-      //   )}
-      // </div>
       <FormControl fullWidth variant="standard">
         <InputLabel
-          sx={{ display: "flex", alignItems: "center", columnGap: 1 }}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            columnGap: 1,
+          }}
           htmlFor="Email"
         >
-          <AlternateEmailIcon className="text-blue-600" />
+          <AlternateEmailIcon className="text-yellow-600" />
           <span className="text-slate-200">Email Address</span>
         </InputLabel>
         <Input
@@ -153,7 +127,7 @@ export default function Login() {
           sx={{ display: "flex", alignItems: "center", columnGap: 1 }}
           htmlFor="password"
         >
-          <VpnKeyOffIcon className="text-blue-600" />
+          <VpnKeyOffIcon className="text-yellow-600" />
           <span className="text-slate-200">Password</span>
         </InputLabel>
         <Input
@@ -165,7 +139,7 @@ export default function Login() {
           onBlur={formik.handleBlur}
           error={formik.touched.password && Boolean(formik.errors.password)}
           endAdornment={
-            <InputAdornment position="end">
+            <InputAdornment position="end" className="text-yellow-400">
               <IconButton
                 aria-label={showPassword ? "hide password" : "show password"}
                 onClick={togglePasswordVisibility}
@@ -216,18 +190,21 @@ export default function Login() {
 
               {/* Remember Me + Forget Password */}
               <div className="forget-pass flex justify-between items-center mt-5 mb-5">
-                <label className="flex items-center gap-x-2 text-sm lg:text-lg text-slate-200">
-                  <Checkbox
-                    checked={checked}
-                    onChange={handleChange}
-                    inputProps={{ "aria-label": "controlled" }}
-                    className=""
-                  />
-                  Remember Me
-                </label>
+                <div className="checkbox-wrapper-46">
+                  <input type="checkbox" id="cbx-46" className="inp-cbx" />
+                  <label htmlFor="cbx-46" className="cbx">
+                    <span>
+                      <svg viewBox="0 0 12 10" height="10px" width="12px">
+                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                      </svg>
+                    </span>
+                    <span className="text-slate-200">Remember ME</span>
+                  </label>
+                </div>
+
                 <Link
                   to="/forgetPassword"
-                  className="text-sm lg:text-lg text-blue-500 hover:underline hover:text-blue-800 duration-300"
+                  className="text-sm lg:text-lg text-yellow-600 hover:underline hover:text-yellow-800 duration-300"
                 >
                   Forget Password..?
                 </Link>
@@ -237,7 +214,7 @@ export default function Login() {
               <div className="btns flex flex-col gap-3">
                 <button
                   type="submit"
-                  className="text-white bg-blue-700 hover:bg-blue-800 duration-300 font-medium rounded-lg text-sm w-full p-3 text-center cursor-pointer"
+                  className="text-white bg-yellow-600 hover:bg-yellow-700 duration-300 font-medium rounded-lg text-sm w-full p-3 text-center cursor-pointer"
                   disabled={isLoading}
                 >
                   {isLoading ? (
@@ -247,13 +224,12 @@ export default function Login() {
                   )}
                 </button>
                 <span className="block text-center relative text-slate-200">
-                  {" "}
-                  OR{" "}
+                  OR
                 </span>
                 <Link to="/signup">
                   <button
                     type="button"
-                    className="text-slate-950 bg-slate-100 border border-blue-800 hover:bg-blue-800 hover:text-white duration-300 font-medium rounded-lg text-sm w-full p-3 text-center cursor-pointer"
+                    className="text-slate-950 bg-slate-100 border border-slate-50 hover:bg-yellow-700 hover:border-yellow-700 hover:text-white duration-300 font-medium rounded-lg text-sm w-full p-3 text-center cursor-pointer"
                   >
                     Register
                   </button>
