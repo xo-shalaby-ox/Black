@@ -9,6 +9,7 @@ export default function Home() {
         list menu
         <Link to="signup">sign up</Link>
         <Link to="login">login</Link>
+        <h1> Welcome Alaa i love you ^_^</h1>
       </div>
       <BackgroundBeams />
     </>
