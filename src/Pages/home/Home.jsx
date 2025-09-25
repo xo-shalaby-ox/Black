@@ -6,9 +6,9 @@ export default function Home() {
   return (
     <>
       <div className="relative flex flex-col items-center justify-center z-40  bg-black text-white gap-4">
-        Home
-        <Link to="login">login</Link>
+        list menu
         <Link to="signup">sign up</Link>
+        <Link to="login">login</Link>
       </div>
       <BackgroundBeams />
     </>
