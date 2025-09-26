@@ -38,7 +38,6 @@ const validationSchema = yup.object().shape({
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [checked, setChecked] = useState(true);
   const { setUserLogin, setUserName } = useContext(userContext);
   const navigate = useNavigate();
 
