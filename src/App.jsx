@@ -14,7 +14,7 @@ import Home from "./Pages/home/Home";
 let query = new QueryClient();
 let Routing = createBrowserRouter([
   {
-    path: "/",
+    path: "",
     element: <Layout />,
     children: [
       {
