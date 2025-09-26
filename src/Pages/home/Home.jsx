@@ -1,27 +1,27 @@
 // import { BackgroundBeams } from "@/Components/ui/background-beams";
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function Home() {
   return (
     <>
-      <Link
-        to="/login"
+      <NavLink
+        to="login"
         onClick={() => {
-          console.log("clicked signin");
+          console.log("Clicked");
         }}
       >
-        Login
-      </Link>
-      <Link
-        to="/signup"
+        login
+      </NavLink>
+      <NavLink
+        to="signup"
         onClick={() => {
-          console.log("clicked signup");
+          console.log("Clicked");
         }}
       >
         Signup
-      </Link>
-
+      </NavLink>
+      <h1>Home Page</h1>
       {/* <BackgroundBeams /> */}
     </>
   );

@@ -10,11 +10,12 @@ import WishlistContextProvider from "./Context/wishlistContext/WishlistContext";
 import Login from "./Pages/Authentication/login/Login";
 import Signup from "./Pages/Authentication/signup/Signup";
 import Home from "./Pages/home/Home";
+import NotFound from "./Pages/NotFound/NotFound";
 
 let query = new QueryClient();
 let Routing = createBrowserRouter([
   {
-    path: "/",
+    path: "",
     element: <Layout />,
     children: [
       {
@@ -23,6 +24,7 @@ let Routing = createBrowserRouter([
       },
       { path: "login", element: <Login /> },
       { path: "signup", element: <Signup /> },
+      { path: "*", element: <NotFound /> },
     ],
   },
 ]);
