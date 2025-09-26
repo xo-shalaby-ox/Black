@@ -3,7 +3,7 @@ import { Link, Outlet } from "react-router-dom";
 export default function Layout() {
   return (
     <>
-      <ul className="relative flex justify-center items-center gap-4 p-4 z-40">
+      <ul className="relative flex justify-center items-center gap-4 p-4 ">
         <Link to="/" className="cursor-pointer">
           home
         </Link>
