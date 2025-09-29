@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <NavLink
-        to="login"
+        to="/login"
         onClick={() => {
           console.log("Clicked");
         }}
@@ -14,7 +14,7 @@ export default function Home() {
         login
       </NavLink>
       <NavLink
-        to="signup"
+        to="/signup"
         onClick={() => {
           console.log("Clicked");
         }}

@@ -15,15 +15,15 @@ import NotFound from "./Pages/NotFound/NotFound";
 let query = new QueryClient();
 let Routing = createBrowserRouter([
   {
-    path: "",
+    path: "/",
     element: <Layout />,
     children: [
       {
         index: true,
         element: <Home />,
       },
-      { path: "login", element: <Login /> },
-      { path: "signup", element: <Signup /> },
+      { path: "/login", element: <Login /> },
+      { path: "/signup", element: <Signup /> },
       { path: "*", element: <NotFound /> },
     ],
   },
